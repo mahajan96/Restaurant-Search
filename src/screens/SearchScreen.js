@@ -1,14 +1,23 @@
-import React , {useState, useEffect} from 'react';
+import React , {useState} from 'react';
 import {Text , View , StyleSheet} from 'react-native';
 import SearchBar from '../components/SearchBar';
-
-import useResults from '../hooks/useResults' 
+import ResultsList from '../components/ResultsList';
+import useResults from '../hooks/useResults';
 
 
 const SearchScreen = () => {
 
     const [term , setTerm] = useState('');
     const [ searchApi, results, errorMessage] = useResults();
+        
+    // Groupping on basis of price 
+    const filterResultsByPrice = (price) =>{
+    
+        return results.filter(result => {
+            return result.price === price;
+        }) ;
+
+    };
 
     return(
 
@@ -20,11 +29,19 @@ const SearchScreen = () => {
             />
             
         {errorMessage ? <Text> {errorMessage}</Text> : null}
-        <Text> {results.length} results found</Text>
+        <Text style = {Styles.text}> {results.length} results found</Text>
+
+        <ResultsList results = { filterResultsByPrice('$') } title ='Price Effective'/>
+        <ResultsList results = { filterResultsByPrice('$$') } title ='Bit Pricer'/>
+        <ResultsList results = { filterResultsByPrice('$$') } title = 'Big Spender'/> 
         </View>
     );
 };
 
-const Styles = StyleSheet.create({});
+const Styles = StyleSheet.create({
+    text:{
+        marginLeft:15
+    }
+});
 
 export default SearchScreen;
