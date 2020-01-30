@@ -8,7 +8,7 @@ const ResultsDetail = ( {result} ) => {
         <View style = {Styles.container}>
             <Image style = {Styles.image} source = { {uri : result.image_url} } />
             <Text style ={Styles.name}> {result.name}</Text>
-    <Text> {result.rating} Stars, {result.review_count} reviews </Text>
+            <Text> {result.rating} Stars, {result.review_count} reviews </Text>
         </View>
     );
 };
